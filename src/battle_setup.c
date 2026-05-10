@@ -513,6 +513,7 @@ static void DoGauntletBattle(void)
     // Set opponent party
     ZeroEnemyPartyMons();
     CreateMonWithIVs(&gEnemyParty[0], sGauntletSpecies[gGauntletIndex], 50, Random32(), OTID_STRUCT_RANDOM_NO_SHINY, USE_RANDOM_IVS);
+    GiveMonInitialMoveset(&gEnemyParty[0]);
     CreateBattleStartTask(GetWildBattleTransition(), 0);
     IncrementGameStat(GAME_STAT_TOTAL_BATTLES);
     IncrementGameStat(GAME_STAT_TRAINER_BATTLES);

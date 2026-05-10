@@ -938,6 +938,10 @@ static enum CancelerResult CancelerPPDeduction(struct BattleContext *ctx)
      || ctx->move == MOVE_STRUGGLE)
         return CANCELER_RESULT_SUCCESS;
 
+    // Gauntlet: No PP loss for player
+    if (gBattleTypeFlags & BATTLE_TYPE_GAUNTLET && GetBattlerSide(ctx->battlerAtk) == B_SIDE_PLAYER)
+        return CANCELER_RESULT_SUCCESS;
+
     s32 ppToDeduct = 1;
     enum MoveTarget moveTarget = GetBattlerMoveTargetType(ctx->battlerAtk, ctx->move);
     u32 movePosition = gCurrMovePos;

@@ -223,10 +223,7 @@ bool8 MetatileBehavior_IsReflective(u8 metatileBehavior)
 
 bool8 MetatileBehavior_IsIce(u8 metatileBehavior)
 {
-    if (metatileBehavior == MB_ICE)
-        return TRUE;
-    else
-        return FALSE;
+    return FALSE;
 }
 
 bool8 MetatileBehavior_IsWarpDoor(u8 metatileBehavior)
@@ -369,10 +366,7 @@ bool8 MetatileBehavior_IsForcedMovementTile(u8 metatileBehavior)
 
 bool8 MetatileBehavior_IsIce_2(u8 metatileBehavior)
 {
-    if (metatileBehavior == MB_ICE)
-        return TRUE;
-    else
-        return FALSE;
+    return FALSE;
 }
 
 bool8 MetatileBehavior_IsTrickHouseSlipperyFloor(u8 metatileBehavior)

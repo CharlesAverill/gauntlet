@@ -8,6 +8,7 @@ EverGrandeCity_HallOfFame_OnWarp:
 	.2byte 0
 
 EverGrandeCity_HallOfFame_EventScript_TurnPlayerNorth::
+	clearflag FLAG_UNUSED_0x040
 	turnobject LOCALID_PLAYER, DIR_NORTH
 	end
 
@@ -18,7 +19,7 @@ EverGrandeCity_HallofFame_EventScript_Pokeball::
 	lockall
 	setvar VAR_TEMP_TRANSFERRED_SPECIES, SPECIES_MEWTWO
 	givemon SPECIES_MEWTWO, 50, ITEM_TWISTEDSPOON, BALL_MASTER
-	setflag FLAG_TEMP_1
+	setflag FLAG_UNUSED_0x040
 	end
 
 EverGrandeCity_HallOfFame_EventScript_GameClearMale::
@@ -53,6 +54,33 @@ EverGrandeCity_HallOfFame_Movement_WalkIntoHallOfFame2:
 	walk_up
 	walk_up
 	step_end
+
+
+HemlockTown_BerrySeller::
+    lock
+    faceplayer
+    message HemlockTown_ImTheBerrySeller
+    waitmessage
+    faceplayer
+    pokemart HemlockTown_BerrySeller_Items
+	msgbox gText_PleaseComeAgain
+	release
+    end
+
+	.align 2
+HemlockTown_BerrySeller_Items::
+	.2byte ITEM_POMEG_BERRY
+	.2byte ITEM_KELPSY_BERRY
+	.2byte ITEM_QUALOT_BERRY
+	.2byte ITEM_HONDEW_BERRY
+	.2byte ITEM_GREPA_BERRY
+	.2byte ITEM_TAMATO_BERRY
+	.2byte ITEM_NONE
+	pokemartlistend
+
+HemlockTown_ImTheBerrySeller::
+    .string "Hey there, I'm the BERRY Seller!\p"
+    .string "How can I help you?$"
 
 EverGrandeCity_HallOfFame_Text_HereWeHonorLeagueChampions:
 	.string "WALLACE: This room…\p"

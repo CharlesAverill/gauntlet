@@ -5253,6 +5253,7 @@ static void Cmd_getswitchedmondata(void)
         {
             u32 partyIndex = gBattlerPartyIndexes[battler];
             CreateMonWithIVs(&gEnemyParty[partyIndex], sGauntletSpecies[gGauntletIndex], 50, Random32(), OTID_STRUCT_RANDOM_NO_SHINY, USE_RANDOM_IVS);
+            GiveMonInitialMoveset(&gEnemyParty[partyIndex]);
             gBattleStruct->monToSwitchIntoId[battler] = partyIndex;
         }
     }
@@ -5290,6 +5291,7 @@ static void Cmd_switchindataupdate(void)
         {
             u32 partyIndex = gBattlerPartyIndexes[battler];
             CreateMonWithIVs(&gEnemyParty[partyIndex], sGauntletSpecies[gGauntletIndex], 50, Random32(), OTID_STRUCT_RANDOM_NO_SHINY, USE_RANDOM_IVS);
+            GiveMonInitialMoveset(&gEnemyParty[partyIndex]);
             gBattlerPartyIndexes[battler] = gBattleStruct->monToSwitchIntoId[battler] = partyIndex;
         }
         else
