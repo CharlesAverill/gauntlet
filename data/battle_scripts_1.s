@@ -4034,6 +4034,7 @@ BattleScript_GiveExp::
 
 BattleScript_HandleFaintedMon::
 	setbyte sSHIFT_SWITCHED, 0
+	jumpifbattletype BATTLE_TYPE_GAUNTLET, BattleScript_HandleFaintedMonGauntlet
 	checkteamslost BattleScript_HandleFaintedMonMultiple
 	jumpifbyte CMP_NOT_EQUAL, gBattleOutcome, 0, BattleScript_FaintedMonEnd
 	jumpifbattletype BATTLE_TYPE_TRAINER | BATTLE_TYPE_DOUBLE, BattleScript_FaintedMonTryChoose
@@ -4109,6 +4110,20 @@ BattleScript_FaintedMonSendOutNewEnd:
 	cancelallactions
 BattleScript_FaintedMonEnd::
 	end2
+
+BattleScript_HandleFaintedMonGauntlet::
+	jumpifword CMP_COMMON_BITS, gHitMarker, HITMARKER_PLAYER_FAINTED, BattleScript_FaintedMonTryChoose @ If player fainted, handle normally
+	@ Opponent fainted, check if more gauntlet mons
+	addbyte gGauntletIndex, 1
+	jumpifbyte CMP_EQUAL | CMP_GREATER_THAN, gGauntletIndex, 151, BattleScript_GauntletEnd @ If all done, end
+	@ Send next mon
+	setbyte sSHIFT_SWITCHED, 0
+	goto BattleScript_FaintedMonSendOutNew
+
+BattleScript_GauntletEnd::
+	setbyte gBattleOutcome, B_OUTCOME_WON
+	finishaction
+
 BattleScript_FaintedMonShiftSwitched:
 	copybyte sSAVED_BATTLER, gBattlerTarget
 	switchineffects BS_ATTACKER

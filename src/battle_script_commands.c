@@ -7,6 +7,7 @@
 #include "battle_ai_main.h"
 #include "battle_ai_util.h"
 #include "battle_scripts.h"
+#include "battle_setup.h"
 #include "battle_switch_in.h"
 #include "battle_environment.h"
 #include "battle_z_move.h"
@@ -4254,6 +4255,7 @@ static void Cmd_getexp(void)
             {
                 // Music change in a wild battle after fainting opposing pokemon.
                 if (!(gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+                    && !(gBattleTypeFlags & BATTLE_TYPE_GAUNTLET)
                     && (gBattleMons[0].hp || (IsDoubleBattle() && gBattleMons[2].hp))
                     && !IsBattlerAlive(GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT))
                     && (!IsDoubleBattle() || !IsBattlerAlive(GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT)))
@@ -5244,9 +5246,15 @@ static void Cmd_getswitchedmondata(void)
         return;
 
     enum BattleSide side = GetBattlerSide(battler);
-    assertf(IsValidSwitchIn(side, gBattleStruct->monToSwitchIntoId[battler]))
+
+    if (!IsValidSwitchIn(side, gBattleStruct->monToSwitchIntoId[battler]))
     {
-        gBattleStruct->monToSwitchIntoId[battler] = GetArbitraryValidSwitchIn(side);
+        if ((gBattleTypeFlags & BATTLE_TYPE_GAUNTLET) && side == B_SIDE_OPPONENT)
+        {
+            u32 partyIndex = gBattlerPartyIndexes[battler];
+            CreateMonWithIVs(&gEnemyParty[partyIndex], sGauntletSpecies[gGauntletIndex], 50, Random32(), OTID_STRUCT_RANDOM_NO_SHINY, USE_RANDOM_IVS);
+            gBattleStruct->monToSwitchIntoId[battler] = partyIndex;
+        }
     }
 
     gBattlerPartyIndexes[battler] = gBattleStruct->monToSwitchIntoId[battler];
@@ -5276,9 +5284,19 @@ static void Cmd_switchindataupdate(void)
         monData[i] = gBattleResources->bufferB[battler][4 + i];
 
     enum BattleSide side = GetBattlerSide(battler);
-    assertf(IsBattlerAlive(battler))
+    if (!IsBattlerAlive(battler))
     {
-        gBattlerPartyIndexes[battler] = gBattleStruct->monToSwitchIntoId[battler] = GetArbitraryValidSwitchIn(side);
+        if ((gBattleTypeFlags & BATTLE_TYPE_GAUNTLET) && side == B_SIDE_OPPONENT)
+        {
+            u32 partyIndex = gBattlerPartyIndexes[battler];
+            CreateMonWithIVs(&gEnemyParty[partyIndex], sGauntletSpecies[gGauntletIndex], 50, Random32(), OTID_STRUCT_RANDOM_NO_SHINY, USE_RANDOM_IVS);
+            gBattlerPartyIndexes[battler] = gBattleStruct->monToSwitchIntoId[battler] = partyIndex;
+        }
+        else
+        {
+            gBattlerPartyIndexes[battler] = gBattleStruct->monToSwitchIntoId[battler] = GetArbitraryValidSwitchIn(side);
+        }
+
         BtlController_EmitGetMonData(battler, B_COMM_TO_CONTROLLER, REQUEST_ALL_BATTLE, 1u << gBattlerPartyIndexes[battler]);
         MarkBattlerForControllerExec(battler);
         return;
@@ -5297,6 +5315,18 @@ static void Cmd_switchindataupdate(void)
             gBattleMons[battler].ability = TestRunner_Battle_GetForcedAbility(trainer, partyIndex);
     }
     #endif
+
+    // Gauntlet: override species for opponent
+    if ((gBattleTypeFlags & BATTLE_TYPE_GAUNTLET) && GetBattlerSide(battler) == B_SIDE_OPPONENT)
+    {
+        SetMonData(&gEnemyParty[gBattlerPartyIndexes[battler]], MON_DATA_SPECIES, &sGauntletSpecies[gGauntletIndex]);
+        CalculateMonStats(&gEnemyParty[gBattlerPartyIndexes[battler]]);
+        gBattleMons[battler].species = sGauntletSpecies[gGauntletIndex];
+        gBattleMons[battler].types[0] = GetSpeciesType(gBattleMons[battler].species, 0);
+        gBattleMons[battler].types[1] = GetSpeciesType(gBattleMons[battler].species, 1);
+        gBattleMons[battler].ability = GetAbilityBySpecies(gBattleMons[battler].species, gBattleMons[battler].abilityNum);
+        RecalcBattlerStats(battler, &gEnemyParty[gBattlerPartyIndexes[battler]], FALSE);
+    }
 
     if (GetBattlerPartyState(battler)->isKnockedOff)
     {

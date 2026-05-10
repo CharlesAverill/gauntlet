@@ -5717,6 +5717,8 @@ enum Obedience GetAttackerObedienceForAction(void)
 
     if (gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER && GetBattlerPosition(gBattlerAttacker) == B_POSITION_PLAYER_RIGHT)
         return OBEYS;
+    if ((gBattleTypeFlags & BATTLE_TYPE_GAUNTLET) && !BattlerHasAi(gBattlerAttacker))
+        return OBEYS;
     if (gBattleTypeFlags & BATTLE_TYPE_FRONTIER)
         return OBEYS;
     if (gBattleTypeFlags & BATTLE_TYPE_RECORDED)

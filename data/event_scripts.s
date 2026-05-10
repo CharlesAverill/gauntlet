@@ -1318,6 +1318,13 @@ Movement_UnusedBoardFerry:
 	walk_up
 	step_end
 
+EventScript_StartGauntletBattle::
+	lockall
+	special BattleSetup_StartGauntletBattle
+	waitstate
+	releaseall
+	end
+
 Common_EventScript_FerryDepartIsland::
 	call_if_eq VAR_FACING, DIR_SOUTH, Ferry_EventScript_DepartIslandSouth
 	call_if_eq VAR_FACING, DIR_WEST, Ferry_EventScript_DepartIslandWest
