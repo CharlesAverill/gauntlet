@@ -252,15 +252,15 @@ static const struct SpriteTemplate sSpriteTemplate_Selector =
 };
 
 // Begin Generic UI Initialization Code
-void Task_OpenStatEditorFromStartMenu(u8 taskId)
-{
-    if (!gPaletteFade.active)
-    {
-        CleanupOverworldWindowsAndTilemaps();
-        StatEditor_Init(CB2_ReturnToFieldWithOpenMenu);
-        DestroyTask(taskId);
-    }
-}
+// void Task_OpenStatEditorFromStartMenu(u8 taskId)
+// {
+//     if (!gPaletteFade.active)
+//     {
+//         CleanupOverworldWindowsAndTilemaps();
+//         StatEditor_Init(CB2_ReturnToFieldWithOpenMenu);
+//         DestroyTask(taskId);
+//     }
+// }
 
 // This is our main initialization function if you want to call the menu from elsewhere
 void StatEditor_Init(MainCallback callback)

@@ -20,7 +20,9 @@ EverGrandeCity_HallOfFame_EventScript_PokemonSelector::
 	faceplayer
 	goto_if_set FLAG_UNUSED_0x040, EverGrandeCity_HallOfFame_EventScript_AlreadySelected
 	goto_if_set FLAG_SYS_POKEMON_GET, EverGrandeCity_HallOfFame_EventScript_AskSwitch
-	goto EverGrandeCity_HallOfFame_EventScript_ProceedToChoose
+	msgbox EverGrandeCity_HallOfFame_Text_CheckBag
+	release
+	end
 
 EverGrandeCity_HallOfFame_EventScript_AskSwitch::
 	msgbox EverGrandeCity_HallOfFame_Text_AskSwitch, MSGBOX_YESNO
@@ -268,9 +270,12 @@ EverGrandeCity_HallOfFame_Text_LetsRecordYouAndYourPartnersNames:
 	.string "the POKéMON LEAGUE, and the names of\l"
 	.string "the partners who battled with you.$"
 
+EverGrandeCity_HallOfFame_Text_CheckBag:
+	.string "Why don't you check the bag by the\n"
+	.string "pedestal, first?$"	
+
 EverGrandeCity_HallOfFame_Text_ChooseYourPokemon:
-	.string "Let me help you choose your POKéMON\n"
-	.string "through a special selection process.$"
+	.string "Let me help you choose your POKéMON.$"
 
 EverGrandeCity_HallOfFame_Text_DoYouWantThisPokemon:
 	.string "Do you want {STR_VAR_1}?$"

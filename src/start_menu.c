@@ -1527,8 +1527,8 @@ void Script_ForceSaveGame(struct ScriptContext *ctx)
     sSaveDialogCallback = SaveSavingMessageCallback;
 }
 
-static bool8 StartMenuStatEditorCallback(void)
-{
-    CreateTask(Task_OpenStatEditorFromStartMenu, 0);
-    return TRUE;
-}
+// static bool8 StartMenuStatEditorCallback(void)
+// {
+//     CreateTask(Task_OpenStatEditorFromStartMenu, 0);
+//     return TRUE;
+// }
