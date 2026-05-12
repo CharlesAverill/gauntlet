@@ -1,5 +1,5 @@
-#ifndef GUARD_WILD_ENCOUNTER_H
-#define GUARD_WILD_ENCOUNTER_H
+#ifndef WILD_ENCOUNTER
+#define WILD_ENCOUNTER
 
 #include "rtc.h"
 #include "constants/wild_encounter.h"
@@ -68,5 +68,6 @@ u32 ChooseWildMonIndex_Rocks(void);
 u32 ChooseHiddenMonIndex(void);
 bool32 MapHasNoEncounterData(void);
 enum TimeOfDay GetTimeOfDayForEncounters(u32 headerId, enum WildPokemonArea area);
+u8 PickWildMonNature(u32 species);
 
-#endif // GUARD_WILD_ENCOUNTER_H
+#endif /* WILD_ENCOUNTER */

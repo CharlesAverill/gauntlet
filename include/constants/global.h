@@ -1,5 +1,5 @@
-#ifndef GUARD_CONSTANTS_GLOBAL_H
-#define GUARD_CONSTANTS_GLOBAL_H
+#ifndef GLOBAL
+#define GLOBAL
 
 // You can use the ENABLED_ON_RELEASE and DISABLED_ON_RELEASE macros to
 // control whether a feature is enabled or disabled when making a release build.
@@ -179,6 +179,16 @@ enum Gender
     GENDER_COUNT,
 };
 
+//Needed for VAR_STARTER_MON
+//passing to monchoicedata
+//for birch case upgrade
+enum StarterIds
+{
+    GRASS_STARTER,
+    FIRE_STARTER,
+    WATER_STARTER,
+};
+
 #define NUM_BARD_SONG_WORDS    6
 #define NUM_STORYTELLER_TALES  4
 #define NUM_TRADER_ITEMS       4
@@ -230,4 +240,4 @@ enum Connection
 #include "config/test.h"
 #endif
 
-#endif // GUARD_CONSTANTS_GLOBAL_H
+#endif /* GLOBAL */
