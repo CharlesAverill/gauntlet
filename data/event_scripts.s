@@ -1320,6 +1320,13 @@ Movement_UnusedBoardFerry:
 
 EventScript_StartGauntletBattle::
 	lockall
+	specialvar VAR_RESULT, CountPartyNonEggMons
+	goto_if_ne VAR_RESULT, 0, EventScript_StartGauntletBattle_Proceed
+	msgbox MoveRelearner_Text_HaveNoPkmn, MSGBOX_DEFAULT
+	releaseall
+	end
+
+EventScript_StartGauntletBattle_Proceed::
 	special BattleSetup_StartGauntletBattle
 	waitstate
 	releaseall
