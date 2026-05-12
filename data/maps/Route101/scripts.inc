@@ -219,6 +219,7 @@ Route101_EventScript_BirchsBag::
 	lock
 	faceplayer
 	setflag FLAG_SYS_POKEMON_GET
+	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F
 	setflag FLAG_RESCUED_BIRCH
 	fadescreen FADE_TO_BLACK
 	removeobject LOCALID_BIRCH_BAG

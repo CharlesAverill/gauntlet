@@ -1054,18 +1054,22 @@ gStdScripts_End::
 	.include "data/scripts/debug.inc"
 
 EventScript_WhiteOut::
+	clearflag FLAG_HIDE_ROUTE_101_BIRCH_STARTERS_BAG
+	clearflag FLAG_SYS_POKEMON_GET
+	removepartymon 0
 	call EverGrandeCity_HallOfFame_EventScript_ResetEliteFour
 	goto EventScript_ResetMrBriney
 	end
 
 EventScript_AfterWhiteOutHeal::
 	lockall
-	msgbox gText_FirstShouldRestoreMonsHealth
-	call EventScript_PkmnCenterNurse_TakeAndHealPkmn
-	call_if_unset FLAG_DEFEATED_RUSTBORO_GYM, EventScript_AfterWhiteOutHealMsgPreFirstBoss
-	call_if_set FLAG_DEFEATED_RUSTBORO_GYM, EventScript_AfterWhiteOutHealMsg
-	applymovement VAR_LAST_TALKED, Movement_PkmnCenterNurse_Bow
-	waitmovement 0
+	@msgbox gText_FirstShouldRestoreMonsHealth
+	@call EventScript_PkmnCenterNurse_TakeAndHealPkmn
+	@call_if_unset FLAG_DEFEATED_RUSTBORO_GYM, EventScript_AfterWhiteOutHealMsgPreFirstBoss
+	@call_if_set FLAG_DEFEATED_RUSTBORO_GYM, EventScript_AfterWhiteOutHealMsg
+	@applymovement VAR_LAST_TALKED, Movement_PkmnCenterNurse_Bow
+	@waitmovement 0
+	special HealPlayerParty
 	fadedefaultbgm
 	releaseall
 	end
@@ -1320,6 +1324,7 @@ Movement_UnusedBoardFerry:
 
 EventScript_StartGauntletBattle::
 	lockall
+	setrespawn HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F
 	specialvar VAR_RESULT, CountPartyNonEggMons
 	goto_if_ne VAR_RESULT, 0, EventScript_StartGauntletBattle_Proceed
 	msgbox MoveRelearner_Text_HaveNoPkmn, MSGBOX_DEFAULT

@@ -42,6 +42,12 @@
 #include "trainer_hill.h"
 #include "fldeff.h"
 #include "battle.h"
+#include "ui_startmenu_full.h"
+#include "battle_pike.h"
+#include "battle_pyramid.h"
+#include "battle_pyramid_bag.h"
+#include "safari_zone.h"
+#include "field_specials.h"
 
 static void Task_ExitNonAnimDoor(u8);
 static void Task_ExitNonDoor(u8);
@@ -60,10 +66,10 @@ static void UpdateStairsMovement(s16, s16, s16*, s16*, s16*);
 static void Task_StairWarp(u8);
 static void ForceStairsMovement(u32, s16*, s16*);
 
-static const u8 sText_PlayerScurriedToCenter[] = _("{PLAYER} scurried to a POKéMON CENTER,\nprotecting the exhausted and fainted\nPOKéMON from further harm…\p");
-static const u8 sText_PlayerScurriedBackHome[] = _("{PLAYER} scurried back home, protecting\nthe exhausted and fainted POKéMON from\nfurther harm…\p");
-static const u8 sText_PlayerRegroupCenter[] = _("{PLAYER} scurried to a POKéMON CENTER,\nto regroup and reconsider the battle\nstrategy…\p");
-static const u8 sText_PlayerRegroupHome[] = _("{PLAYER} scurried back home, to regroup\nand reconsider the battle strategy…\p");
+static const u8 sText_PlayerScurriedToCenter[] = _("{PLAYER} attempts the Gauntlet once more…\p");
+static const u8 sText_PlayerScurriedBackHome[] = _("{PLAYER} attempts the Gauntlet once more…\p");
+static const u8 sText_PlayerRegroupCenter[] = _("{PLAYER} attempts the Gauntlet once more…\p");
+static const u8 sText_PlayerRegroupHome[] = _("{PLAYER} attempts the Gauntlet once more…\p");
 
 // data[0] is used universally by tasks in this file as a state for switches
 #define tState       data[0]
@@ -462,7 +468,10 @@ static void Task_WaitForFadeShowStartMenu(u8 taskId)
     if (WaitForWeatherFadeIn() == TRUE)
     {
         DestroyTask(taskId);
-        CreateTask(Task_ShowStartMenu, 80);
+        if (GetSafariZoneFlag() || InBattlePyramid_() || InBattlePike() || InUnionRoom() || InMultiPartnerRoom())
+            CreateTask(Task_ShowStartMenu, 80);
+        else        
+            CreateTask(Task_OpenStartMenuFullScreen, 80);
     }
 }
 
@@ -1427,7 +1436,7 @@ static void Task_RushInjuredPokemonToCenter(u8 taskId)
         PutWindowTilemap(windowId);
         CopyWindowToVram(windowId, COPYWIN_FULL);
 
-        gTasks[taskId].tIsPlayerHouse = IsLastHealLocationPlayerHouse();
+        gTasks[taskId].tIsPlayerHouse = FALSE; //IsLastHealLocationPlayerHouse();
         gTasks[taskId].tState = WHITEOUT_CUTSCENE_PRINT_MSG;
         break;
     case WHITEOUT_CUTSCENE_PRINT_MSG:
