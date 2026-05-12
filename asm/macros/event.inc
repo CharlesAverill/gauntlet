@@ -2722,6 +2722,12 @@
 	.endif
 	.endm
 
+	@ Remove pokemon from party at given slot index
+    .macro removepartymon slot:req
+    .byte SCR_OP_REMOVEPARTYMON
+    .2byte \slot
+    .endm
+
 	@ Creates a new follower NPC with the specified graphics id.
 	.macro createfollowernpc gfx:req, flags:req, script=0, battlePartner=0
 	.if FNPC_ENABLE_NPC_FOLLOWERS

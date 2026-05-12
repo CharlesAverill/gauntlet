@@ -19,10 +19,26 @@ EverGrandeCity_HallOfFame_EventScript_PokemonSelector::
 	lock
 	faceplayer
 	goto_if_set FLAG_UNUSED_0x040, EverGrandeCity_HallOfFame_EventScript_AlreadySelected
+	goto_if_set FLAG_SYS_POKEMON_GET, EverGrandeCity_HallOfFame_EventScript_AskSwitch
+	goto EverGrandeCity_HallOfFame_EventScript_ProceedToChoose
+
+EverGrandeCity_HallOfFame_EventScript_AskSwitch::
+	msgbox EverGrandeCity_HallOfFame_Text_AskSwitch, MSGBOX_YESNO
+	switch VAR_RESULT
+	case YES, EverGrandeCity_HallOfFame_EventScript_ProceedToChoose
+	case NO, EverGrandeCity_HallOfFame_EventScript_DontSwitch
+	goto EverGrandeCity_HallOfFame_EventScript_DontSwitch
+
+EverGrandeCity_HallOfFame_EventScript_ProceedToChoose::
 	msgbox EverGrandeCity_HallOfFame_Text_ChooseYourPokemon, MSGBOX_DEFAULT
 	setvar VAR_TEMP_2, 1 @ Min species (Bulbasaur)
 	setvar VAR_TEMP_3, 151 @ Max species (Mew)
 	goto EverGrandeCity_HallOfFame_EventScript_BinarySearch
+
+EverGrandeCity_HallOfFame_EventScript_DontSwitch::
+	msgbox EverGrandeCity_HallOfFame_Text_DontSwitch, MSGBOX_DEFAULT
+	release
+	end
 
 EverGrandeCity_HallOfFame_EventScript_BinarySearch::
 	@ VAR_TEMP_4 = VAR_TEMP_2 + VAR_TEMP_3 via loop
@@ -97,6 +113,7 @@ EverGrandeCity_HallOfFame_EventScript_Selected::
 	copyvar VAR_TEMP_TRANSFERRED_SPECIES, VAR_TEMP_4
 	bufferspeciesname STR_VAR_1, VAR_TEMP_TRANSFERRED_SPECIES
 	msgbox EverGrandeCity_HallOfFame_Text_YouChoseThisPokemon, MSGBOX_DEFAULT
+	removepartymon 0
 	givemon VAR_TEMP_TRANSFERRED_SPECIES, 50, ITEM_NONE, BALL_MASTER
 	setflag FLAG_UNUSED_0x040
 	releaseall
@@ -252,9 +269,6 @@ EverGrandeCity_HallOfFame_Text_LetsRecordYouAndYourPartnersNames:
 	.string "the partners who battled with you.$"
 
 EverGrandeCity_HallOfFame_Text_ChooseYourPokemon:
-	.string "Welcome, challenger!\p"
-	.string "You will face all 151 original POKéMON\n"
-	.string "in the GAUNTLET with just one partner.\p"
 	.string "Let me help you choose your POKéMON\n"
 	.string "through a special selection process.$"
 
@@ -287,3 +301,10 @@ EverGrandeCity_HallOfFame_Text_Lower:
 
 EverGrandeCity_HallOfFame_Text_StartOver:
 	.string "Start over$"
+
+EverGrandeCity_HallOfFame_Text_AskSwitch:
+	.string "You already have a POKéMON.\n"
+	.string "Would you like to switch it?$"
+
+EverGrandeCity_HallOfFame_Text_DontSwitch:
+	.string "Very well. Come back if you change your mind.$"

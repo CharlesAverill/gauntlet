@@ -705,5 +705,5 @@ void StartNewPokeballCaseUI(void)
 void StartNewPokeballCaseUIForBirchBattle(void)
 {
     FadeScreen(FADE_TO_BLACK, 0);
-    CreateTask(Task_OpenBirchCaseGotoBattle, 0);
+    CreateTask(Task_OpenBirchCase, 0);
 }

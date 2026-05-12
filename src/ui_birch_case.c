@@ -413,8 +413,8 @@ static void CreatePokeballSprites()
     for(i=0; i<9; i++)
     {
         u16 x, y;
-        if(sStarterChoices[i].species == SPECIES_NONE)
-            continue;
+        // if(sStarterChoices[i].species == SPECIES_NONE)
+        //     continue;
 
         if(i <= 3)
         {
@@ -531,13 +531,13 @@ void Task_OpenBirchCase(u8 taskId)
     }
 }
 
-//continues to birch battle
+//continues back to the overworld after starter selection
 void Task_OpenBirchCaseGotoBattle(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
         CleanupOverworldWindowsAndTilemaps();
-        BirchCase_Init(CB2_GiveStarter_NewBirchUI);
+        BirchCase_Init(CB2_ReturnToFieldContinueScriptPlayMapMusic);
         DestroyTask(taskId);
     }
 }

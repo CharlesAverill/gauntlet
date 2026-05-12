@@ -826,3 +826,9 @@ void Script_SetKO(struct ScriptContext *ctx)
         SetMonData(&gPlayerParty[slot], MON_DATA_HP, &hp);
     }
 }
+
+void ScriptTakeMonFromPlayer(u16 index){
+    ZeroMonData(&gPlayerParty[index]);
+    CompactPartySlots();
+    CalculatePlayerPartyCount();
+}

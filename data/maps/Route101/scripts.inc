@@ -221,28 +221,28 @@ Route101_EventScript_BirchsBag::
 	setflag FLAG_SYS_POKEMON_GET
 	setflag FLAG_RESCUED_BIRCH
 	fadescreen FADE_TO_BLACK
-	removeobject LOCALID_ROUTE101_ZIGZAGOON
-	setobjectxy LOCALID_PLAYER, 6, 13
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
-	waitmovement 0
+	removeobject LOCALID_BIRCH_BAG
+	@setobjectxy LOCALID_PLAYER, 6, 13
+	@applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
+	@waitmovement 0
 	@special ChooseStarter @default starter logic
 	callnative StartNewPokeballCaseUIForBirchBattle
 	waitstate
-	applymovement LOCALID_ROUTE101_BIRCH, Route101_Movement_BirchApproachPlayer
-	waitmovement 0
-	msgbox Route101_Text_YouSavedMe, MSGBOX_DEFAULT
-	special HealPlayerParty
-	setflag FLAG_HIDE_ROUTE_101_BIRCH_ZIGZAGOON_BATTLE
-	clearflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_BIRCH
+	@applymovement LOCALID_ROUTE101_BIRCH, Route101_Movement_BirchApproachPlayer
+	@waitmovement 0
+	@msgbox Route101_Text_YouSavedMe, MSGBOX_DEFAULT
+	@special HealPlayerParty
+	@setflag FLAG_HIDE_ROUTE_101_BIRCH_ZIGZAGOON_BATTLE
+	@clearflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCHS_LAB_BIRCH
 	setflag FLAG_HIDE_ROUTE_101_BIRCH_STARTERS_BAG
-	setvar VAR_BIRCH_LAB_STATE, 2
-	setvar VAR_ROUTE101_STATE, 3
-	clearflag FLAG_HIDE_MAP_NAME_POPUP
-	checkplayergender
-	call_if_eq VAR_RESULT, MALE, Route101_EventScript_HideMayInBedroom
-	call_if_eq VAR_RESULT, FEMALE, Route101_EventScript_HideBrendanInBedroom
-	warp MAP_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB, 6, 5
-	waitstate
+	@setvar VAR_BIRCH_LAB_STATE, 2
+	@setvar VAR_ROUTE101_STATE, 3
+	@clearflag FLAG_HIDE_MAP_NAME_POPUP
+	@checkplayergender
+	@call_if_eq VAR_RESULT, MALE, Route101_EventScript_HideMayInBedroom
+	@call_if_eq VAR_RESULT, FEMALE, Route101_EventScript_HideBrendanInBedroom
+	@warp MAP_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB, 6, 5
+	@waitstate
 	release
 	end
 
