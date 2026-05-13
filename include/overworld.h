@@ -1,5 +1,5 @@
-#ifndef OVERWORLD
-#define OVERWORLD
+#ifndef GUARD_OVERWORLD_H
+#define GUARD_OVERWORLD_H
 
 #include "constants/map_types.h"
 
@@ -203,4 +203,4 @@ void Overworld_CreditsMainCB(void);
 bool32 Overworld_DoScrollSceneForCredits(u8 *, const struct CreditsOverworldCmd *);
 void CB2_ReturnToFullScreenStartMenu(void);
 
-#endif /* OVERWORLD */
+#endif // GUARD_OVERWORLD_H
